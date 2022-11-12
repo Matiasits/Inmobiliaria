@@ -21,25 +21,25 @@ class Nodo:
 class Lista():
     primero = None # Nulo lista vacia
     ultimo = None
-    tamanio = 0
+    largo = 0
 
     def vacia(self)->bool: # devuelva si la lista esta vacia
         return self.primero == None
 
     def agregar(self,dato): #creo un nodo nuevo y lo agrego al principio
         nodo_nuevo = Nodo(dato)
-        nodoNuevo.siguiente = self.primero
+        nodo_nuevo.siguiente = self.primero
         if self.vacia() == True:
             self.ultimo = nodo_nuevo
         self.primero = nodo_nuevo
-        self.tamanio = self.tamanio + 1
+        self.largo = self.largo + 1
 
     def imprimir(self): # recorro todos los nodos y los voy imprimiendo
         nodo_i = self.primero
         while nodo_i != None:
             print(nodo_i.dato)
             nodo_i = nodo_i.siguiente
-
+        
     def tamanio(self)->int: #ejercicio
         """devuelve la cantidad de elementos o nodos que hay en la lsita"""
         return self.tamanio
@@ -68,7 +68,7 @@ class Lista():
             nodo_i = nodo_i.siguiente
         if self.primero == None:
             self.ultimo = None
-        self.tamanio -= 1
+        self.largo -= 1
     
     def agregar_final(self,e)->None:
         """O(n) -> lineal"""

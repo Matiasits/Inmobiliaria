@@ -23,4 +23,4 @@ class Propiedad:
     
         
     def __str__(self) -> str:
-        return f"Barrio: {self.barrio}\nTipo: {self.tipo}\nAmbientes: {self.ambientes}\nPrecio: {self.precio}"
+        return f" >> Barrio: {self.barrio}\n >> Tipo: {self.tipo}\n >> Ambientes: {self.ambientes}\n >> Precio: {self.precio}"

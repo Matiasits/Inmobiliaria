@@ -9,4 +9,4 @@ class Cliente:
         return self.dni == self.dni
     
     def __str__(self) -> str:
-        return f"DNI: {self.dni}\nNombre Completo: {self.nombreCompleto}\nTelefono: {self.telefono}\nCorreo: {self.correo}"
+        return f" >> DNI: {self.dni}\n >> Nombre Completo: {self.nombreCompleto}\n >> Telefono: {self.telefono}\n >> Correo: {self.correo}"

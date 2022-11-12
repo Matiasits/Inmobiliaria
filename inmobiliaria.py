@@ -6,67 +6,82 @@ from listas import *
 #Inmobiliaria solo para propiedades de Cordoba Capital
 class Inmobiliaria:
     #Atributos basicos de la inmobiliaria
-    def __init__(self, operacion:str) -> None:
-        self.operacion = operacion
+    def __init__(self) -> None:
         self.propiedades = Lista()
         self.clientes = Lista()    
 
-    def alquilar_propiedad(self,propiedad,cliente) -> str:
-        estado = ""
-        if self.propiedades(propiedad) == "Disponible":
-            #disponibilidad = "Alquilada"
-            #estado = "Alquilada por {self.cliente}"
-        else:
-            #
-            pass
+    def alquilar(self,propiedad:object,cliente:object) -> str:
+        if propiedad.disponibilidad == "Disponible":
+            propiedad.disponibilidad = "Alquilada"
+        return f"Alquilada a:\n{cliente.__str__()}"
 
-#METODOS PARA PROPIEDADES
+    def vender(self,propiedad,cliente) -> str:
+        if propiedad.disponibilidad == "Disponible":
+            propiedad.disponibilidad = "Vendida"
+            vendida_a = f"Vendida a:\n{cliente.__str__()}"
+        return vendida_a
+
+
+    #METODOS PARA PROPIEDADES
     def alta_propiedad(self,propiedad) -> None:
         self.propiedades.agregar(propiedad)
         pass
     
+    def buscar_dato_propiedad(self,propiedad:object,dato:str): #devuelve objeto tipo dato
+        if self.buscar_propiedad(propiedad) == True:
+            datos = {
+                "barrio": propiedad.barrio,
+                "tipo": propiedad.tipo,
+                "precio": propiedad.precio,
+                "ambientes": propiedad.ambientes,
+                "propietario": propiedad.propietario,
+                "disponibilidad": propiedad.disponibilidad
+            }
+            if dato in datos:
+                print (f"{dato}: {datos[dato]}")
+        else:
+            print("No esta de alta")
+
     def baja_propiedad(self,propietario) -> None:
         propiedad = self.propiedades.buscar(propietario)
         self.propiedades.remover(propiedad)
-        pass
-    
-    def buscar_propiedad(self,propiedad) -> bool:
+
+    def buscar_propiedad(self,propiedad:object) -> bool:
         return self.propiedades.buscar(propiedad)
-        pass
+        
 
-    def cambiar_precio(self):
-        pass
+    def cambiar_precio(self,nuevo_precio:int,propiedad:object) -> None:
+        if self.propiedades.buscar(propiedad) == True:
+            propiedad.precio = nuevo_precio
+        return propiedad.precio
 
-    def cambiar_estado(self):
-        pass
-
-#METODOS PARA CLIENTES
+    #METODOS Clientes        
     def alta_cliente(self,cliente) -> None:
         self.clientes.agregar(cliente)
-        pass
+
 
     def baja_cliente(self,cliente) -> None:
-        c = self.clientes.buscar(cliente)
-        self.clientes.remover(c)
-        pass
+        if self.clientes.buscar(cliente) == True:
+            self.clientes.remover(cliente)
 
     def buscar_cliente(self,cliente) -> bool:
         return self.clientes.buscar(cliente)
+        
 
 
-    """
-    funcionalidades:
-    dar alta cliente
-    dar alta propiedad
-    dar baja clientes
-    dar baja propiedad 
-    modificar cliente
-    modificar propiedad
-    modificar disponibilidad
-    buscar clientes por dni
-    buscar propiedad por barrio/tipo
-    buscar propiedades dentro de cierto rango de precio
-    buscar por operacion
-    buscar propiedades por ambientes
-    buscar por disponibilidad
-    """
+inmo = Inmobiliaria()
+p1 = Propiedad("nva cordoba","depto",12000,1,41712653)
+p2 = Propiedad("villa libertador","casa",24000,1,41712653)
+
+
+c1 = Cliente(41712653,"nasmidasd",123123,"asdfgaf@FASDFASF")
+c2 = Cliente(25712653,"asd",123,"@aFASDFASF")
+
+inmo.alta_propiedad(p1)
+#inmo.alta_propiedad(p2)
+
+inmo.alta_cliente(c1)
+inmo.alta_cliente(c2)
+
+inmo.buscar_dato_propiedad(p1,"tipo")
+inmo.buscar_dato_propiedad(p2,"tipo")
