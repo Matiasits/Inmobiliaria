@@ -5,8 +5,8 @@ class Cliente:
         self.telefono = telefono
         self.correo = correo
     
-    def __eq__(self,) -> bool:
-        return self.dni == self.dni
+    def __eq__(self,other) -> bool:
+        return self.dni == other.dni
     
     def __str__(self) -> str:
         return f" >> DNI: {self.dni}\n >> Nombre Completo: {self.nombreCompleto}\n >> Telefono: {self.telefono}\n >> Correo: {self.correo}"
