@@ -21,7 +21,7 @@ class Nodo:
 class Lista():
     primero = None # Nulo lista vacia
     ultimo = None
-    largo = 0
+    tamanio = 0
 
     def vacia(self)->bool: # devuelva si la lista esta vacia
         return self.primero == None
@@ -32,19 +32,30 @@ class Lista():
         if self.vacia() == True:
             self.ultimo = nodo_nuevo
         self.primero = nodo_nuevo
-        self.largo = self.largo + 1
+        self.tamanio = self.tamanio + 1
 
     def imprimir(self): # recorro todos los nodos y los voy imprimiendo
         nodo_i = self.primero
         while nodo_i != None:
             print(nodo_i.dato)
             nodo_i = nodo_i.siguiente
-        
-    def tamanio(self)->int: #ejercicio
+
+    def tamanio2(self)->int: #ejercicio
         """devuelve la cantidad de elementos o nodos que hay en la lsita"""
         return self.tamanio
 
-    def buscar(self,elemento)->bool:
+    def buscar(self,elemento):
+        nodo_i = self.primero
+        encontrado = False
+        devolver = None
+        while nodo_i != None and encontrado != True:
+            if nodo_i.dato == elemento:
+                devolver = nodo_i.dato
+                encontrado = True
+            nodo_i = nodo_i.siguiente
+        return devolver
+
+    def se_encuentra (self,elemento) -> bool:
         nodo_i = self.primero
         encontrado = False
         while nodo_i != None:
@@ -68,7 +79,7 @@ class Lista():
             nodo_i = nodo_i.siguiente
         if self.primero == None:
             self.ultimo = None
-        self.largo -= 1
+        self.tamanio -= 1
     
     def agregar_final(self,e)->None:
         """O(n) -> lineal"""
@@ -90,6 +101,66 @@ class Lista():
         self.ultimo.siguiente = nuevo_nodo
         self.ultimo = nuevo_nodo
 
+    def acceder(self,indice):
+        nodo = self.primero
+
+        if indice == 0:
+            nodo = self.primero
+
+        else:
+            contador = 1
+
+            while contador <= indice and indice <= self.tamanio:
+                nodo = nodo.siguiente
+                contador = contador + 1
+
+        return nodo.dato
+    
+    def asignar(self, indice, dato):
+        nodo = self.primero
+
+        if indice == 0:
+            nodo.dato = dato
+
+        else:
+            contador = 1
+
+            while contador <= indice and indice <= self.tamanio:
+                nodo = nodo.siguiente
+                contador = contador + 1
+            nodo.dato = dato
+
+        return nodo.dato #Este return esta puesto para hacer las pruebas y ver los resultados de la funcion para saber que funcionan
+    
+    def ordenamientoPorInsercion2(self):
+        for indice in range(1,self.tamanio2()):
+            valorActual = self.acceder(indice) #Debuelve el elemento de ese indice
+            posicion = indice #Guarda el numero de la pocicion
+
+            while posicion > 0 and self.acceder(posicion-1) < valorActual:
+                self.asignar(posicion,self.acceder(posicion-1)) #Se intercambia un dato(self.acceder(posicion-1) por el elemento que este en la posicion indicada(pocicion)))
+                posicion = posicion-1
+                self.asignar(posicion,valorActual)
+    
+#    def ordenamientoPorInsercion2(unaLista):
+#	for indice in range(1,len(unaLista)):
+#		valorActual = unaLista[indice]
+#		posicion = indice
+
+#		while posicion > 0 and unaLista[posicion-1] < valorActual:
+#			unaLista[posicion]=unaLista[posicion-1]
+#			posicion = posicion-1
+#			unaLista[posicion] = valorActual
+
+#	return unaLista
+        
+
+
+
+    
+        
+
+    
 
 if __name__ == "__main__":
     # prueba nodo
@@ -118,7 +189,15 @@ if __name__ == "__main__":
     
     # prueba lista
     milista = Lista()
-    milista.agregar(1)
-    milista.agregar(2)
-    milista.agregar(3)
+    print("----------------------")
+    milista.agregar("Codigo enigma")
+    milista.agregar("Jumangi")
+    milista.agregar("Lo que el viento se llevo")
+    milista.agregar_final("Star wars")
     milista.imprimir()
+
+    milista.ordenamientoPorInsercion2()
+    print("-----------------")
+    milista.imprimir()
+
+
