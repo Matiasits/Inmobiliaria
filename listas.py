@@ -187,17 +187,3 @@ if __name__ == "__main__":
     nodo3.siguiente = nodoNuevo
     print(nodo0.siguiente.siguiente.siguiente.siguiente.dato) # -1
     
-    # prueba lista
-    milista = Lista()
-    print("----------------------")
-    milista.agregar("Codigo enigma")
-    milista.agregar("Jumangi")
-    milista.agregar("Lo que el viento se llevo")
-    milista.agregar_final("Star wars")
-    milista.imprimir()
-
-    milista.ordenamientoPorInsercion2()
-    print("-----------------")
-    milista.imprimir()
-
-
