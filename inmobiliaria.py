@@ -52,15 +52,15 @@ class Inmobiliaria:
         pass
 
     #METODOS Clientes        
-    def alta_cliente(self,dni) -> None:
-        self.clientes.agregar(cliente)
+    def alta_cliente(self,c) -> None:
+        self.clientes.agregar(c)
 
-    def baja_cliente(self,dni) -> None:
-        if self.clientes.buscar(cliente) == True:
-            self.clientes.remover(cliente)
+    def baja_cliente(self,c) -> None:
+        if self.clientes.buscar(c):
+            self.clientes.remover(c)
 
-    def buscar_cliente(self,dni) -> bool:
-        return self.clientes.buscar(dni)
+    def buscar_cliente(self,c) -> bool:
+        return self.clientes.buscar(c)
         
     def buscar_dato_cliente(self,cliente:object,dato:str): #devuelve objeto tipo dato
         print("Elija una opcion:\n1) General\n2) DNI\n3) Nombre\n4) Telefono\n5) Correo")
@@ -101,9 +101,9 @@ def guardar_archivo(inmobiliaria,archivo="inmobiliaria.pickle"):
 
 def leer_archivo(inmobiliaria,archivo="inmobiliaria.pickle"):
     pickle_file = open(archivo,'rb')
-    inmo = pickle.load(pickle_file)
+    inmobiliaria = pickle.load(pickle_file)
     pickle_file.close()
-    return inmo
+    return inmobiliaria
 
 
 
@@ -136,125 +136,114 @@ def menu():
 
 
 if __name__ == "__main__":
-    inmobiliara = Inmobiliaria()
+    inmobiliaria = Inmobiliaria()
 
     opcion = 0
 
     while opcion != 12:
         opcion = menu()
-    
+
         if opcion == 1:
             dni = int(input("Dni: "))
             nombreCompleto = input("Nombre Coompleto: ")
             telefono = int(input("Telefono: "))
             correo = input("Email: ")
             cliente = Cliente(dni,nombreCompleto,telefono,correo)
-            if inmobiliara.buscar_cliente(cliente.dni):
+            
+            if inmobiliaria.buscar_cliente(cliente):
                 print("El cliente ya existe")
             else:
-                inmobiliara.alta_cliente(cliente)
+                inmobiliaria.alta_cliente(cliente)
                 print("Nuevo cliente")
     
         if opcion == 2:
             dni = input("Dni: ")
-            if inmobiliara.buscar_cliente(dni):
+            if inmobiliaria.buscar_cliente(dni):
                 print(f"El cliente {dni} no existe")
             else:
-                inmobiliara.baja_cliente(dni)
+                inmobiliaria.baja_cliente(dni)
                 print(f"Cliente {dni} ha sido dado de baja")
         
         if opcion == 3:
             dni = int(input("Dni: "))
-            print(inmobiliara.buscar_cliente(dni))
+            c = Cliente(dni,'',0,'')
+            print(inmobiliaria.buscar_cliente(c))
 
         if opcion == 4:
             dni = int(input("Dni: "))
-            print(inmobiliara.modificar_cliente(dni))
+            print(inmobiliaria.modificar_cliente(dni))
 
         if opcion == 5:
+            id = int(input("Id: "))
             barrio= input("barrio: ")
             tipo = input("tipo: ")
-            precio = input("precio: ")
-            ambientes = input("ambientes: ")
-            propietario = input("propietario: ")
-            propiedad = Propiedad(barrio,tipo,precio,ambientes,propietario)
-            if inmobiliara.buscar_propiedad(propiedad.propietario):
+            precio = float(input("precio: "))
+            ambientes = int(input("ambientes: "))
+            propietario = int(input("propietario: "))
+            propiedad = Propiedad(barrio,tipo,precio,ambientes,propietario,id)
+            
+            if inmobiliaria.buscar_propiedad(propiedad.propietario):
                 print("La propiedad ya esta dada de alta")
             else:
-                inmobiliara.alta_propiedad(propiedad.propietario)
+                inmobiliaria.alta_propiedad(propiedad.propietario)
                 print("Propiedad dada de alta")
-        
+
         if opcion == 6:
-            barrio= input("barrio: ")
-            tipo = input("tipo: ")
-            precio = input("precio: ")
-            ambientes = input("ambientes: ")
-            propietario = input("propietario: ")
-            p = Propiedad(barrio,tipo,precio,ambientes,propietario)
-            if inmobiliara.buscar_propiedad(p):
-                print("La propiedad no esta dada de alta")
+            id = int(input("Id: "))
+            propiedad = Propiedad("","",0.0,"",0,id)
             
+            
+            if inmobiliaria.buscar_propiedad(propiedad):
+                print("La propiedad no esta dada de alta")
             else:
-                inmobiliara.baja_propiedad(p)
+                inmobiliaria.baja_propiedad(propiedad)
                 print("Propiedad ha sido dada de baja")
         
         if opcion == 7:
-            barrio= input("barrio: ")
-            tipo = input("tipo: ")
-            precio = input("precio: ")
-            ambientes = input("ambientes: ")
-            propietario = input("propietario: ")
-            p = Propiedad(barrio,tipo,precio,ambientes,propietario)
-
-            print(inmobiliara.buscar_propiedad(p))
+            id = int(input("Id: "))
+            propiedad = Propiedad("","",0.0,"",0,id)
+            
+            print(inmobiliaria.buscar_propiedad(propiedad))
         
         if opcion == 8:
-            barrio= input("barrio: ")
-            tipo = input("tipo: ")
-            precio = input("precio: ")
-            ambientes = input("ambientes: ")
-            propietario = input("propietario: ")
-            p = Propiedad(barrio,tipo,precio,ambientes,propietario)
-            
-            if inmobiliara.buscar_propiedad(p):
+            id = int(input("Id: "))
+            propiedad = Propiedad("","",0.0,"",0,id)            
+            if inmobiliaria.buscar_propiedad(propiedad):
                 print("La pelicula no existe")
             else:
-                print(inmobiliara.modificar_propiedad(p))
+                print(inmobiliaria.modificar_propiedad(propiedad))
 
         if opcion == 9:
-            barrio= input("barrio: ")
-            tipo = input("tipo: ")
-            precio = input("precio: ")
-            ambientes = input("ambientes: ")
-            propietario = input("propietario: ")
-            p = Propiedad(barrio,tipo,precio,ambientes,propietario)
-            
+            id = int(input("Id: "))
+            propiedad = Propiedad("","",0.0,"",0,id)            
+            dni = int(input("Dni: "))
+            c = Cliente(dni,'',0,'')
 
-            if inmobiliara.buscar_propiedad(p) and inmobiliara.buscar_cliente(cliente.dni):
-                inmobiliara.alquilar(p,cliente)
-            
+            if inmobiliaria.buscar_propiedad(propiedad) and inmobiliaria.buscar_cliente(c):
+                inmobiliaria.alquilar(propiedad,c)
             else:
                 print("No se encuentra disponible para alquilar")
         
         if opcion == 10:
-            barrio= input("barrio: ")
-            tipo = input("tipo: ")
-            precio = input("precio: ")
-            ambientes = input("ambientes: ")
-            propietario = input("propietario: ")
-            p = Propiedad(barrio,tipo,precio,ambientes,propietario)
+            id = int(input("Id: "))
+            propiedad = Propiedad("","",0.0,"",0,id)
             
+            dni = int(input("Dni: "))
+            c = Cliente(dni,'',0,'')
 
-            if inmobiliara.buscar_propiedad(p) and inmobiliara.buscar_cliente(cliente.dni):
-                inmobiliara.vender(p,cliente)
-            
+            if inmobiliaria.buscar_propiedad(p) and inmobiliaria.buscar_cliente(c):
+                inmobiliaria.vender(propiedad,c)
             else:
                 print("No se encuentra disponible para comprar")
 
         if opcion == 11:
-            guardar_archivo(inmobiliara)
+            guardar_archivo(inmobiliaria)
+
         if opcion == 12:
-            inmo = leer_archivo(inmobiliara)
+            inmo = leer_archivo(inmobiliaria)
 
         if opcion == 13:
             break
+
+        print(f"Clientes: {inmobiliaria.clientes.largo()}")
+        print(f"Propiedades: {inmobiliaria.propiedades.largo()}")

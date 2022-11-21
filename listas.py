@@ -40,7 +40,7 @@ class Lista():
             print(nodo_i.dato)
             nodo_i = nodo_i.siguiente
 
-    def tamanio2(self)->int: #ejercicio
+    def largo(self)->int: #ejercicio
         """devuelve la cantidad de elementos o nodos que hay en la lsita"""
         return self.tamanio
 
