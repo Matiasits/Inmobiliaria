@@ -28,19 +28,7 @@ class Inmobiliaria:
 
     def buscar_dato_propiedad(self,propiedad:object,dato:str): #devuelve objeto tipo dato
         if self.buscar_propiedad(propiedad):
-            datos = {
-                "barrio": propiedad.barrio,
-                "tipo": propiedad.tipo,
-                "precio": propiedad.precio,
-                "ambientes": propiedad.ambientes,
-                "propietario": propiedad.propietario,
-                "disponibilidad": propiedad.disponibilidad
-            }
-            if dato in datos:
-                print (f"{dato}: {datos[dato]}")
-        else:
-            print("No esta de alta")
-
+            pass
     def baja_propiedad(self,propietario) -> None:
         propiedad = self.propiedades.buscar(propietario)
         self.propiedades.remover(propiedad)
@@ -59,39 +47,17 @@ class Inmobiliaria:
         if self.clientes.buscar(c):
             self.clientes.remover(c)
 
-    def buscar_cliente(self,c) -> bool:
+    def buscar_cliente(self,c):
         return self.clientes.buscar(c)
         
     def buscar_dato_cliente(self,cliente:object,dato:str): #devuelve objeto tipo dato
-        print("Elija una opcion:\n1) General\n2) DNI\n3) Nombre\n4) Telefono\n5) Correo")
-
-        opcion = int(input("Opcion: "))
-        
-        if opcion > 0 and opcion < 6:
-
-            if self.buscar_cliente(cliente):
-                datos = {
-                    1 : cliente.__str__(),
-                    2 : cliente.dni,
-                    3 : cliente.nombreCompleto,
-                    4 : cliente.telefono,
-                    5 : cliente.correo,
-                }
-                if dato in datos:
-                    print (f"{dato}: {datos[dato]}")
-        else:
-            print("No esta de alta")
-
+        #else:
+         #   print("No esta de alta")
+        pass
     def modificar_cliente(self,cliente,opcion:int):
         
 
 
-        datos = {   
-                2 : cliente.dni,
-                3 : cliente.nombreCompleto,
-                4 : cliente.telefono,
-                5 : cliente.correo,
-            }
         pass
 
 def guardar_archivo(inmobiliaria,archivo="inmobiliaria.pickle"):
@@ -114,24 +80,10 @@ def leer_archivo(inmobiliaria,archivo="inmobiliaria.pickle"):
 def menu():
     opcion = 0
     while opcion < 1 or opcion > 14:
-        print("--")
-        print("1 Dar de alta nuevo cliente")
-        print("(2) Dar de baja cliente")
-        print("(3) Buscar un cliente")
-        print("(4) Modificar un cliente")
-        print("(5) Dar de alta nueva propieda")
-        print("(6) Dar de baja propiedad")
-        print("(7) Buscar una propiedad")
-        print("(8) Modificar una propiedad")
-        print("(9) Alquilar propiedad")
-        print("(10) Vender propiedad")
-        print("(11) Guardar archivo")
-        print("(12) Leer archivo")
-        print("(13) Salir")
+        print("1 > Dar de alta nuevo cliente\n2 > Dar de baja cliente\n3 > Buscar un cliente\n4 > Modificar un cliente\n5 > Dar de alta nueva propiedad\n6 > Dar de baja propiedad\n7 > Buscar una propiedad\n8 > Modificar una propiedad\n9 > Alquilar propiedad\n10 > Vender propiedad\n11 > Guardar archivo\n12 > Leer archivo\n13 > Salir")
         # consultar pelicula - me devuelve la informacion de la pelicula
-        print("--")
-        opcion = int(input("Elija una opcion: "))
-        print("--")
+        opcion = int(input("\nElija una opcion: "))
+        
     return opcion
 
 
@@ -148,6 +100,7 @@ if __name__ == "__main__":
             nombreCompleto = input("Nombre Coompleto: ")
             telefono = int(input("Telefono: "))
             correo = input("Email: ")
+            
             cliente = Cliente(dni,nombreCompleto,telefono,correo)
             
             if inmobiliaria.buscar_cliente(cliente):
@@ -157,7 +110,7 @@ if __name__ == "__main__":
                 print("Nuevo cliente")
     
         if opcion == 2:
-            dni = input("Dni: ")
+            dni = int(input("Dni: "))
             if inmobiliaria.buscar_cliente(dni):
                 print(f"El cliente {dni} no existe")
             else:
@@ -177,7 +130,7 @@ if __name__ == "__main__":
             id = int(input("Id: "))
             barrio= input("barrio: ")
             tipo = input("tipo: ")
-            precio = float(input("precio: "))
+            precio = int(input("precio: "))
             ambientes = int(input("ambientes: "))
             propietario = int(input("propietario: "))
             propiedad = Propiedad(barrio,tipo,precio,ambientes,propietario,id)
@@ -245,5 +198,5 @@ if __name__ == "__main__":
         if opcion == 13:
             break
 
-        print(f"Clientes: {inmobiliaria.clientes.largo()}")
-        print(f"Propiedades: {inmobiliaria.propiedades.largo()}")
+        print(f"\nClientes: {inmobiliaria.clientes.largo()}")
+        print(f"Propiedades: {inmobiliaria.propiedades.largo()}\n")
