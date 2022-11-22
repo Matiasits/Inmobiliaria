@@ -40,7 +40,7 @@ class Lista():
             print(nodo_i.dato)
             nodo_i = nodo_i.siguiente
 
-    def largo(self)->int: #ejercicio
+    def largo(self)->int: 
         """devuelve la cantidad de elementos o nodos que hay en la lsita"""
         return self.tamanio
 
@@ -65,9 +65,9 @@ class Lista():
         return encontrado
 
     def remover(self,item):
-        nodo_i = self.primero # creo un nodo para recorrer
-        encontrado = False # flag que indique si encontre el item
-        anterior = None # otro nodo que inique cual es el anterior del actual
+        nodo_i = self.primero 
+        encontrado = False 
+        anterior = None 
         if self.primero.dato == item:
             self.primero = self.primero.siguiente
             encontrado = True
@@ -83,53 +83,38 @@ class Lista():
     
     def agregar_final(self,e)->None:
         """O(n) -> lineal"""
-        nuevo_nodo = Nodo(e) # creo un nodo nuevo
+        nuevo_nodo = Nodo(e) 
         self.tamanio +=1
         if self.vacia():
             self.primero = nuevo_nodo
         else:
-            nodo = self.primero # nodo es una variable aux (iterador) para ir recorriendo la lista
-            while nodo.siguiente != None: # mientras no llegue al final (nodo.siguiente == None)
+            nodo = self.primero 
+            while nodo.siguiente != None: 
                 nodo = nodo.siguiente
-            # cuando salgo del while nodo.siguiente == None
             nodo.siguiente = nuevo_nodo
-    
-    def agregar_final_cte(self,e):
-        """O(1) -> constante"""
-        nuevo_nodo=Nodo(e)
-        self.tamanio += 1
-        self.ultimo.siguiente = nuevo_nodo
-        self.ultimo = nuevo_nodo
-
+            
     def acceder(self,indice):
         nodo = self.primero
 
         if indice == 0:
             nodo = self.primero
-
         else:
             contador = 1
-
             while contador <= indice and indice <= self.tamanio:
                 nodo = nodo.siguiente
                 contador = contador + 1
-
         return nodo.dato
     
     def asignar(self, indice, dato):
         nodo = self.primero
-
         if indice == 0:
             nodo.dato = dato
-
         else:
             contador = 1
-
             while contador <= indice and indice <= self.tamanio:
                 nodo = nodo.siguiente
                 contador = contador + 1
             nodo.dato = dato
-
         return nodo.dato #Este return esta puesto para hacer las pruebas y ver los resultados de la funcion para saber que funcionan
     
     def ordenamientoPorInsercion2(self):
