@@ -117,35 +117,6 @@ class Lista():
             nodo.dato = dato
         return nodo.dato #Este return esta puesto para hacer las pruebas y ver los resultados de la funcion para saber que funcionan
     
-    def ordenamientoPorInsercion2(self):
-        for indice in range(1,self.tamanio2()):
-            valorActual = self.acceder(indice) #Debuelve el elemento de ese indice
-            posicion = indice #Guarda el numero de la pocicion
-
-            while posicion > 0 and self.acceder(posicion-1) < valorActual:
-                self.asignar(posicion,self.acceder(posicion-1)) #Se intercambia un dato(self.acceder(posicion-1) por el elemento que este en la posicion indicada(pocicion)))
-                posicion = posicion-1
-                self.asignar(posicion,valorActual)
-    
-#    def ordenamientoPorInsercion2(unaLista):
-#	for indice in range(1,len(unaLista)):
-#		valorActual = unaLista[indice]
-#		posicion = indice
-
-#		while posicion > 0 and unaLista[posicion-1] < valorActual:
-#			unaLista[posicion]=unaLista[posicion-1]
-#			posicion = posicion-1
-#			unaLista[posicion] = valorActual
-
-#	return unaLista
-        
-
-
-
-    
-        
-
-    
 
 if __name__ == "__main__":
     # prueba nodo

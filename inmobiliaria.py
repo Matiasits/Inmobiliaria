@@ -13,14 +13,13 @@ class Inmobiliaria:
     def alquilar(self,p,c) -> str:
         if self.propiedades.buscar(p) and p.disponibilidad == "Disponible":
             p.disponibilidad = "Alquilada"
-        return f"Alquilada a:\n{self.buscar_cliente(c)}"
+        return f"\nAlquilada a:\n{self.buscar_cliente(c)}"
 
     def vender(self,propiedad,c) -> str:
         if propiedad.disponibilidad == "Disponible":
             propiedad.disponibilidad = "Vendida"
-            vendida_a = f"Vendida a:\n{self.buscar_cliente(c)1
-            }"
-        return vendida_a
+        return f"\nVendida a:\n{self.buscar_cliente(c)}"
+         
 
 
     #METODOS PARA PROPIEDADES
@@ -109,7 +108,7 @@ class Inmobiliaria:
         return resultado
 
     def modificar_cliente(self, seleccion, c, nuevo_dato):
-        c_auxiliar = self.buscar_propiedad(c)
+        c_auxiliar = self.buscar_cliente(c)
         
         if seleccion == 1:
             c_auxiliar.dni = nuevo_dato
@@ -126,7 +125,18 @@ class Inmobiliaria:
         return c_auxiliar.__str__()
 
     def ordenar_cliente(self): #ordena los clientes por edad
-        pass
+        
+        for llenarRanura in range(len(self.clientes.largo)-1,0,-1):
+            posicionDelMayor = 0
+            for ubicacion in range(1,llenarRanura+1):
+                if self.clientes.acceder(ubicacion)>self.clientes.acceder(posicionDelMayor):
+                    posicionDelMayor = ubicacion
+
+        temp = self.clientes.acceder(llenarRanura)
+        self.clientes.asignar(self.clientes.acceder(llenarRanura), self.clientes.acceder(posicionDelMayor))
+        self.clientes.asignar(self.clientes.acceder(posicionDelMayor),temp)
+
+        print(self.clientes.imprimir())
 
 def guardar_archivo(inmobiliaria,archivo="inmobiliaria.pickle"):
     pickle_file = open(archivo, 'wb')
@@ -161,9 +171,10 @@ def menu():
             "10 > Modificar una propiedad\n"
             "11 > Alquilar propiedad\n"
             "12 > Vender propiedad\n"
-            "13 > Guardar archivo\n"
-            "14 > Leer archivo\n"
-            "15 > Salir\n"
+            "13 > Ordenar Clientes por edad\n"
+            "14 > Guardar archivo\n"
+            "15 > Leer archivo\n"
+            "16 > Salir\n"
             )
         opcion = int(input("Elija una opcion: "))
         
@@ -179,11 +190,11 @@ if __name__ == "__main__":
         opcion = menu()
 
         if opcion == 1:
-            print("Ingrese los siguientes datos para dar de alta a un cliente")
-            dni = int(input("Dni: "))
-            nombreCompleto = input("Nombre Completo: ")
-            telefono = int(input("Telefono: "))
-            correo = input("Email: ")
+            print("\nIngrese los siguientes datos para dar de alta a un cliente")
+            dni = int(input(" > Dni: "))
+            nombreCompleto = input(" > Nombre Completo: ")
+            telefono = int(input(" > Telefono: "))
+            correo = input(" > Email: ")
             
             cliente = Cliente(dni,nombreCompleto,telefono,correo)
             
@@ -191,23 +202,23 @@ if __name__ == "__main__":
                 print("El cliente ya existe")
             else:
                 inmobiliaria.alta_cliente(cliente)
-                print("Nuevo cliente")
+                print("\n>> Nuevo cliente de alta <<")
     
         if opcion == 2:
-            dni = int(input("Ingrese Dni para dar de baja a un cliente: "))
+            dni = int(input("\nIngrese Dni para dar de baja a un cliente: "))
             if inmobiliaria.buscar_cliente(dni):
-                print(f"El cliente {dni} no existe")
+                print(f"\nEl cliente {dni} no esta en el sistema")
             else:
                 inmobiliaria.baja_cliente(dni)
-                print(f"Cliente {dni} ha sido dado de baja")
+                print(f"\n >> Cliente {dni} ha sido dado de baja << ")
         
         if opcion == 3:
-            dni = int(input("Ingrese Dni para buscar un cliente: "))
+            dni = int(input("\nIngrese Dni para buscar un cliente: "))
             c = Cliente(dni,'',0,'')
-            print(inmobiliaria.buscar_cliente(c))
+            print(f" >> Cliente encontrado! <<\n{inmobiliaria.buscar_cliente(c)}")
         
         if opcion == 4:
-            dni = int(input("Ingrese Dni para mostrar datos del cliente: "))
+            dni = int(input("\nIngrese Dni para mostrar datos del cliente: "))
             c = Cliente(dni,'',0,'')
 
             seleccion = int(input(  "1 > DNI\n"
@@ -216,10 +227,10 @@ if __name__ == "__main__":
                                     "4 > Correo\n"
                                     "Que desea mostrar?: "
                                 ))
-            print(inmobiliaria.buscar_dato_cliente(seleccion, c))
-
+            print(f"\n >> Dato de cliente encontrado! <<\n{inmobiliaria.buscar_cliente(c)}")
+        
         if opcion == 5:
-            dni = int(input("Ingrese Dni para modificar cliente: "))
+            dni = int(input("\nIngrese Dni para modificar cliente: "))
             c = Cliente(dni,'',0,'')
 
             seleccion = int(input(  "1 > DNI\n"
@@ -229,42 +240,42 @@ if __name__ == "__main__":
                                     "Que desea modificar?: "
                                 ))
 
-            nuevo_dato = input("Ingrese el nuevo dato a modificar: ")
-            print(inmobiliaria.modificar_propiedad(seleccion ,c , nuevo_dato))
+            nuevo_dato = input("\nIngrese el nuevo dato a modificar: ")
+            print(f"\n >> Dato de cliente modificado con exito <<\n{inmobiliaria.modificar_cliente(seleccion ,c , nuevo_dato)}")
 
         if opcion == 6:
-            print("Ingrese los siguientes datos para dar de alta una propiedad")
-            identificador = int(input("Id: "))
-            barrio= input("barrio: ")
-            tipo = input("tipo: ")
-            precio = int(input("precio: "))
-            ambientes = int(input("ambientes: "))
-            propietario = int(input("propietario: "))
+            print("\nIngrese los siguientes datos para dar de alta una propiedad")
+            identificador = int(input(" >> Id: "))
+            barrio= input(" >> Barrio: ")
+            tipo = input(" >> Tipo: ")
+            precio = int(input(" >> Precio: "))
+            ambientes = int(input(" >> Ambientes: "))
+            propietario = int(input(" >> Propietario: "))
             p = Propiedad(barrio,tipo,precio,ambientes,propietario,identificador)
             
             if inmobiliaria.buscar_propiedad(p):
-                print("La propiedad ya esta dada de alta")
+                print("\nLa propiedad ya esta dada de alta")
             else:
                 inmobiliaria.alta_propiedad(p)
-                print("Propiedad dada de alta")
-
+                print("\n>> Nueva propiedad de alta <<")
+       
         if opcion == 7:
-            identificador = int(input("Ingrese Id de la propiedad para darla de baja: "))
+            identificador = int(input("\nIngrese Id de la propiedad para darla de baja: "))
             p = Propiedad("","",0.0,"",0,identificador)
             
             if inmobiliaria.buscar_propiedad(p):
-                print("La propiedad no esta dada de alta")
+                print(f"\n >> Propiedad {identificador} no esta en el sistema << ")        
             else:
                 inmobiliaria.baja_propiedad(p)
-                print("Propiedad ha sido dada de baja")
+                print(f"\n >> Propiedad {identificador} ha sido dada de baja << ")        
         
         if opcion == 8:
-            identificador = int(input("Ingrese Id de la propiedad para buscar la misma: "))
+            identificador = int(input("\nIngrese Id de la propiedad para buscar la misma: "))
             p = Propiedad("","",0.0,"",0,identificador)
             print(inmobiliaria.buscar_propiedad(p))
         
         if opcion == 9:
-            identificador = int(input("Ingrese Id de la propiedad para buscar la misma: "))
+            identificador = int(input("\nIngrese Id de la propiedad para buscar la misma: "))
             p = Propiedad("","",0.0,"",0,identificador)
 
             seleccion = int(input(  "1 > Barrio\n"
@@ -276,10 +287,10 @@ if __name__ == "__main__":
                                     "Que desea mostrar?: "
                                 ))
 
-            print(inmobiliaria.buscar_dato_propiedad(seleccion, p))
+            print(f"\n >> Dato de propiedad encontrado! <<\n{inmobiliaria.buscar_dato_propiedad(seleccion, p)}")
         
         if opcion == 10:
-            identificador = int(input("Ingrese Id de la propiedad a modificar: "))
+            identificador = int(input("\nIngrese Id de la propiedad a modificar: "))
             p = Propiedad("","",0.0,"",0,identificador)            
             
             seleccion = int(input(  "1 > Barrio\n"
@@ -291,12 +302,13 @@ if __name__ == "__main__":
                                     "Que desea modificar?: "
                                 ))
 
-            nuevo_dato = input("Ingrese el nuevo dato a modificar: ")
-            print(inmobiliaria.modificar_propiedad(seleccion ,p , nuevo_dato))
+            nuevo_dato = input("\nIngrese el nuevo dato a modificar: ")
+            print(f"\n >> Dato de propiedad modificado con exito <<\n{inmobiliaria.modificar_propiedad(seleccion ,p , nuevo_dato)}")
 
         if opcion == 11:
             identificador = int(input("\nIngrese el Id de la propiedad a alquilar: "))
-            p = Propiedad("","",0.0,"",0,identificador)            
+            p = Propiedad("","",0.0,"",0,identificador)       
+
             dni = int(input("\nIngrese el Dni del cliente que alquilara: "))
             c = Cliente(dni,'',0,'')
 
@@ -317,12 +329,21 @@ if __name__ == "__main__":
                 print("No se encuentra disponible para comprar")
 
         if opcion == 13:
+            print("\nClientes desordenados\n"
+                f"{inmobiliaria.clientes.imprimir()}"
+                "\nClientes ordenados\n"
+                f"{inmobiliaria.ordenar_cliente()}"
+                )
+        
             guardar_archivo(inmobiliaria)
 
         if opcion == 14:
-            inmo = leer_archivo(inmobiliaria)
+            inmo = guardar_archivo(inmobiliaria)
 
         if opcion == 15:
+            inmo = leer_archivo(inmobiliaria)
+
+        if opcion == 16:
             break
 
         print(f"\nClientes: {inmobiliaria.clientes.largo()}")
