@@ -13,12 +13,13 @@ class Inmobiliaria:
     def alquilar(self,p,c) -> str:
         if self.propiedades.buscar(p) and p.disponibilidad == "Disponible":
             p.disponibilidad = "Alquilada"
-        return f"Alquilada a:\n{cliente.__str__()}"
+        return f"Alquilada a:\n{self.buscar_cliente(c)}"
 
     def vender(self,propiedad,c) -> str:
         if propiedad.disponibilidad == "Disponible":
             propiedad.disponibilidad = "Vendida"
-            vendida_a = f"Vendida a:\n{cliente.__str__()}"
+            vendida_a = f"Vendida a:\n{self.buscar_cliente(c)1
+            }"
         return vendida_a
 
 
@@ -26,9 +27,29 @@ class Inmobiliaria:
     def alta_propiedad(self,p) -> None:
         self.propiedades.agregar(p)
 
-    def buscar_dato_propiedad(self,p): #devuelve objeto tipo dato
-        if self.buscar_propiedad(p):
-            pass
+    def buscar_dato_propiedad(self, seleccion, p):
+        p_auxiliar = self.buscar_propiedad(p)
+        resultado = None
+        if seleccion == 1:
+            resultado = f"\nEl barrio es: {p_auxiliar.barrio}"
+
+        elif seleccion == 2:
+            resultado = f"\nEl tipo es: {p_auxiliar.tipo}"
+                
+        elif seleccion == 3:
+            resultado = f"\nEl precio es: {p_auxiliar.precio}"
+                
+        elif seleccion == 4:
+            resultado = f"\nLos ambientes son: {p_auxiliar.ambientes}"
+
+        elif seleccion == 4:
+            resultado = f"\nEl propietario es: {p_auxiliar.propietario}"
+
+        elif seleccion == 4:
+            resultado = f"\nDisponibilidad: {p_auxiliar.disponibilidad}"
+
+        return resultado 
+
     def baja_propiedad(self,p) -> None:
         propiedad = self.propiedades.buscar(propietario)
         self.propiedades.remover(propiedad)
@@ -36,8 +57,28 @@ class Inmobiliaria:
     def buscar_propiedad(self,p):
         return self.propiedades.buscar(p)
 
-    def modificar_propiedad(self,p,nuevo_dato):
-        return self.propiedades.asignar(p.dato,nuevo_dato)
+    def modificar_propiedad(self, seleccion, p, nuevo_dato):
+        p_auxiliar = self.buscar_propiedad(p)
+        
+        if seleccion == 1:
+            p_auxiliar.barrio = nuevo_dato
+            
+        elif seleccion == 2:
+            p_auxiliar.tipo = nuevo_dato
+            
+        elif seleccion == 3:
+            p_auxiliar.precio = nuevo_dato
+            
+        elif seleccion == 4:
+            p_auxiliar.ambientes = nuevo_dato
+                
+        elif seleccion == 5:
+            p_auxiliar.propietario = nuevo_dato
+                
+        elif seleccion == 6:
+            p_auxiliar.disponibilidad = nuevo_dato
+
+        return p_auxiliar.__str__()
 
     #METODOS Clientes        
     def alta_cliente(self,c) -> None:
@@ -50,9 +91,41 @@ class Inmobiliaria:
     def buscar_cliente(self,c):
         return self.clientes.buscar(c)
         
-    def buscar_dato_cliente(self,cliente:object,dato:str): #devuelve objeto tipo dato
-        pass
-    def modificar_cliente(self,cliente,opcion:int):
+    def buscar_dato_cliente(self, seleccion, c):
+        c_auxiliar = self.buscar_cliente(c)
+        resultado = None
+        if seleccion == 1:
+            resultado = f"\nEl DNI es: {c_auxiliar.dni}"
+
+        elif seleccion == 2:
+            resultado = f"\nEl nombre completo es: {c_auxiliar.nombreCompleto}"
+                
+        elif seleccion == 3:
+            resultado = f"\nEl telefono es: {c_auxiliar.telefono}"
+                
+        elif seleccion == 4:
+            resultado = f"\nEl correo es: {c_auxiliar.correo}"
+
+        return resultado
+
+    def modificar_cliente(self, seleccion, c, nuevo_dato):
+        c_auxiliar = self.buscar_propiedad(c)
+        
+        if seleccion == 1:
+            c_auxiliar.dni = nuevo_dato
+            
+        elif seleccion == 2:
+            c_auxiliar.nombreCompleto = nuevo_dato
+            
+        elif seleccion == 3:
+            c_auxiliar.telefono = nuevo_dato
+            
+        elif seleccion == 4:
+            c_auxiliar.correo = nuevo_dato
+                
+        return c_auxiliar.__str__()
+
+    def ordenar_cliente(self): #ordena los clientes por edad
         pass
 
 def guardar_archivo(inmobiliaria,archivo="inmobiliaria.pickle"):
@@ -79,16 +152,18 @@ def menu():
             " 1 > Dar de alta nuevo cliente\n"
             " 2 > Dar de baja cliente\n"
             " 3 > Buscar un cliente\n"
-            " 4 > Modificar un cliente\n"
-            " 5 > Dar de alta nueva propiedad\n"
-            " 6 > Dar de baja propiedad\n"
-            " 7 > Buscar una propiedad\n"
-            " 8 > Modificar una propiedad\n"
-            " 9 > Alquilar propiedad\n"
-            "10 > Vender propiedad\n"
-            "11 > Guardar archivo\n"
-            "12 > Leer archivo\n"
-            "13 > Salir\n"
+            " 4 > Buscar dato de cliente\n"
+            " 5 > Modificar un cliente\n"
+            " 6 > Dar de alta nueva propiedad\n"
+            " 7 > Dar de baja propiedad\n"
+            " 8 > Buscar una propiedad\n"
+            " 9 > Buscar dato de propiedad\n"
+            "10 > Modificar una propiedad\n"
+            "11 > Alquilar propiedad\n"
+            "12 > Vender propiedad\n"
+            "13 > Guardar archivo\n"
+            "14 > Leer archivo\n"
+            "15 > Salir\n"
             )
         opcion = int(input("Elija una opcion: "))
         
@@ -98,8 +173,6 @@ def menu():
 if __name__ == "__main__":
     inmobiliaria = Inmobiliaria()
 
-
-
     opcion = 0
 
     while opcion != 12:
@@ -108,7 +181,7 @@ if __name__ == "__main__":
         if opcion == 1:
             print("Ingrese los siguientes datos para dar de alta a un cliente")
             dni = int(input("Dni: "))
-            nombreCompleto = input("Nombre Coompleto: ")
+            nombreCompleto = input("Nombre Completo: ")
             telefono = int(input("Telefono: "))
             correo = input("Email: ")
             
@@ -132,13 +205,34 @@ if __name__ == "__main__":
             dni = int(input("Ingrese Dni para buscar un cliente: "))
             c = Cliente(dni,'',0,'')
             print(inmobiliaria.buscar_cliente(c))
-
+        
         if opcion == 4:
-            dni = int(input("Ingrese Dni para modificar cliente: "))
+            dni = int(input("Ingrese Dni para mostrar datos del cliente: "))
             c = Cliente(dni,'',0,'')
-            print(inmobiliaria.modificar_cliente(c))
+
+            seleccion = int(input(  "1 > DNI\n"
+                                    "2 > Nombre Completo\n"
+                                    "3 > Telefono\n"
+                                    "4 > Correo\n"
+                                    "Que desea mostrar?: "
+                                ))
+            print(inmobiliaria.buscar_dato_cliente(seleccion, c))
 
         if opcion == 5:
+            dni = int(input("Ingrese Dni para modificar cliente: "))
+            c = Cliente(dni,'',0,'')
+
+            seleccion = int(input(  "1 > DNI\n"
+                                    "2 > Nombre Completo\n"
+                                    "3 > Telefono\n"
+                                    "4 > Correo\n"
+                                    "Que desea modificar?: "
+                                ))
+
+            nuevo_dato = input("Ingrese el nuevo dato a modificar: ")
+            print(inmobiliaria.modificar_propiedad(seleccion ,c , nuevo_dato))
+
+        if opcion == 6:
             print("Ingrese los siguientes datos para dar de alta una propiedad")
             identificador = int(input("Id: "))
             barrio= input("barrio: ")
@@ -154,10 +248,9 @@ if __name__ == "__main__":
                 inmobiliaria.alta_propiedad(p)
                 print("Propiedad dada de alta")
 
-        if opcion == 6:
+        if opcion == 7:
             identificador = int(input("Ingrese Id de la propiedad para darla de baja: "))
             p = Propiedad("","",0.0,"",0,identificador)
-            
             
             if inmobiliaria.buscar_propiedad(p):
                 print("La propiedad no esta dada de alta")
@@ -165,12 +258,27 @@ if __name__ == "__main__":
                 inmobiliaria.baja_propiedad(p)
                 print("Propiedad ha sido dada de baja")
         
-        if opcion == 7:
+        if opcion == 8:
             identificador = int(input("Ingrese Id de la propiedad para buscar la misma: "))
             p = Propiedad("","",0.0,"",0,identificador)
             print(inmobiliaria.buscar_propiedad(p))
         
-        if opcion == 8:
+        if opcion == 9:
+            identificador = int(input("Ingrese Id de la propiedad para buscar la misma: "))
+            p = Propiedad("","",0.0,"",0,identificador)
+
+            seleccion = int(input(  "1 > Barrio\n"
+                                    "2 > Tipo\n"
+                                    "3 > Precio\n"
+                                    "4 > Ambientes\n"
+                                    "5 > Propietario\n"
+                                    "6 > Disponibilidad\n"
+                                    "Que desea mostrar?: "
+                                ))
+
+            print(inmobiliaria.buscar_dato_propiedad(seleccion, p))
+        
+        if opcion == 10:
             identificador = int(input("Ingrese Id de la propiedad a modificar: "))
             p = Propiedad("","",0.0,"",0,identificador)            
             
@@ -182,59 +290,39 @@ if __name__ == "__main__":
                                     "6 > Disponibilidad\n"
                                     "Que desea modificar?: "
                                 ))
-            dato = ""
-
-            if seleccion == 1:
-                dato = "barrio"
-            
-            elif seleccion == 2:
-                dato = "tipo"
-            
-            elif seleccion == 3:
-                dato = "precio"
-            
-            elif seleccion == 4:
-                dato = "ambientes"
-                
-            elif seleccion == 5:
-                dato = "propietario"
-                
-            elif seleccion == 6:
-                dato = "disponibilidad"
 
             nuevo_dato = input("Ingrese el nuevo dato a modificar: ")
-            print(inmobiliaria.modificar_propiedad(p.dato,nuevo_dato))
+            print(inmobiliaria.modificar_propiedad(seleccion ,p , nuevo_dato))
 
-        if opcion == 9:
-            identificador = int(input("Id: "))
+        if opcion == 11:
+            identificador = int(input("\nIngrese el Id de la propiedad a alquilar: "))
             p = Propiedad("","",0.0,"",0,identificador)            
-            dni = int(input("Dni: "))
+            dni = int(input("\nIngrese el Dni del cliente que alquilara: "))
             c = Cliente(dni,'',0,'')
 
             if inmobiliaria.buscar_propiedad(p) and inmobiliaria.buscar_cliente(c):
-                inmobiliaria.alquilar(p,c)
+                print(inmobiliaria.alquilar(p,c))
             else:
                 print("No se encuentra disponible para alquilar")
         
-        if opcion == 10:
-            identificador = int(input("Id: "))
+        if opcion == 12:
+            identificador = int(input("\nIngrese el Id de la propiedad a comprar: "))
             p = Propiedad("","",0.0,"",0,identificador)
-            
-            dni = int(input("Dni: "))
+            dni = int(input("\nIngrese el Dni del cliente que comprara: "))
             c = Cliente(dni,'',0,'')
 
             if inmobiliaria.buscar_propiedad(p) and inmobiliaria.buscar_cliente(c):
-                inmobiliaria.vender(p,c)
+                print(inmobiliaria.vender(p,c))
             else:
                 print("No se encuentra disponible para comprar")
 
-        if opcion == 11:
+        if opcion == 13:
             guardar_archivo(inmobiliaria)
 
-        if opcion == 12:
+        if opcion == 14:
             inmo = leer_archivo(inmobiliaria)
 
-        if opcion == 13:
+        if opcion == 15:
             break
 
         print(f"\nClientes: {inmobiliaria.clientes.largo()}")
