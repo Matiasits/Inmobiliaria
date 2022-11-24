@@ -84,7 +84,7 @@ class Inmobiliaria:
         self.clientes.agregar(c)
 
     def baja_cliente(self,c) -> None:
-        if self.clientes.buscar(c):
+        if self.clientes.se_encuentra(c):
             self.clientes.remover(c)
 
     def buscar_cliente(self,c):
@@ -129,7 +129,7 @@ class Inmobiliaria:
         for llenarRanura in range(len(self.clientes.largo)-1,0,-1):
             posicionDelMayor = 0
             for ubicacion in range(1,llenarRanura+1):
-                if self.clientes.acceder(ubicacion)>self.clientes.acceder(posicionDelMayor):
+                if self.clientes.acceder(ubicacion) > self.clientes.acceder(posicionDelMayor):
                     posicionDelMayor = ubicacion
 
         temp = self.clientes.acceder(llenarRanura)
@@ -200,18 +200,17 @@ if __name__ == "__main__":
             
             if inmobiliaria.buscar_cliente(cliente):
                 print("El cliente ya existe")
+
             else:
                 inmobiliaria.alta_cliente(cliente)
                 print("\n>> Nuevo cliente de alta <<")
     
         if opcion == 2:
             dni = int(input("\nIngrese Dni para dar de baja a un cliente: "))
-            if inmobiliaria.buscar_cliente(dni):
-                print(f"\nEl cliente {dni} no esta en el sistema")
-            else:
-                inmobiliaria.baja_cliente(dni)
-                print(f"\n >> Cliente {dni} ha sido dado de baja << ")
-        
+            c = Cliente(dni,'',0,'')
+            inmobiliaria.baja_cliente(c)
+            print(f"\n >> Cliente {dni} ha sido dado de baja << ")
+
         if opcion == 3:
             dni = int(input("\nIngrese Dni para buscar un cliente: "))
             c = Cliente(dni,'',0,'')
