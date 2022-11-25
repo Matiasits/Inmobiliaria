@@ -121,6 +121,13 @@ class Inmobiliaria:
             c_auxiliar.correo = nuevo_dato
                 
         return c_auxiliar.__str__()
+    
+    def imprimir(self, opcion):
+        
+        if opcion == 1:
+            self.clientes.imprimir()
+        elif opcion == 2:
+            self.propiedades.imprimir()
 
     def ordenar_cliente(self,orden): #ordena los clientes por edad
         lista = None
@@ -181,10 +188,11 @@ def menu():
             "10 > Modificar una propiedad\n"
             "11 > Alquilar propiedad\n"
             "12 > Vender propiedad\n"
-            "13 > Ordenar Clientes por edad\n"
-            "14 > Guardar archivo\n"
-            "15 > Leer archivo\n"
-            "16 > Salir\n"
+            "13 > Ordenar de menor a mayor\n"
+            "14 > Imprimir\n"
+            "15 > Guardar archivo\n"
+            "16 > Leer archivo\n"
+            "17 > Salir\n"
             )
         opcion = int(input("Elija una opcion: "))
         
@@ -344,13 +352,23 @@ if __name__ == "__main__":
             inmobiliaria.ordenar_cliente(orden)
 
         if opcion == 14:
-            guardar_archivo(inmobiliaria)
+            op = int(input(
+                                "1 > Clientes\n"
+                                "2 > Propiedades\n"
+                                "Que desea imprimir?: "
+            ))
+            inmobiliaria.imprimir(op)
+
 
         if opcion == 15:
-            leer_archivo(inmobiliaria)
+            guardar_archivo(inmobiliaria)
             menu()
 
         if opcion == 16:
+            leer_archivo(inmobiliaria)
+            menu()
+
+        if opcion == 17:
             break
 
         print(f"\nClientes: {inmobiliaria.clientes.largo()}")
