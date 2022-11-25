@@ -9,7 +9,7 @@ class Propiedad:
         self.identificador = identificador
 
     def __str__(self) -> str:
-        return f" >> Barrio: {self.barrio} <<\n >> Tipo: {self.tipo} <<\n >> Ambientes: {self.ambientes} <<\n >> Precio: {self.precio} <<\n >> Propietario: {self.propietario} <<\n"
+        return f" >> Id: {self.identificador} <<\n >> Barrio: {self.barrio} <<\n >> Tipo: {self.tipo} <<\n >> Ambientes: {self.ambientes} <<\n >> Precio: {self.precio} <<\n >> Propietario: {self.propietario} <<\n"
     
     def __eq__(self, other):
         return self.identificador == other.identificador
